@@ -18,8 +18,8 @@ ACME_CERT_NAME=$(grep -oP '(?<=acme_cert_name: ")[^"]+' "$CONFIG_FILE")
 CERT_PATH=$(grep -oP '(?<=cert_path: ")[^"]+' "$CONFIG_FILE")
 BACKUP_DIR=$(grep -oP '(?<=backup_dir: ")[^"]+' "$CONFIG_FILE")
 EMAIL=$(grep -oP '(?<=email: ")[^"]+' "$CONFIG_FILE")
-ALI_KEY=$(grep -oP '(?<=Ali_Key: ")[^"]+' "$CONFIG_FILE")
-ALI_SECRET=$(grep -oP '(?<=Ali_Secret: ")[^"]+' "$CONFIG_FILE")
+CF_TOKEN=$(grep -oP '(?<=CF_Token: ")[^"]+' "$CONFIG_FILE")
+CF_ACCOUNT_ID=$(grep -oP '(?<=CF_Account_ID: ")[^"]+' "$CONFIG_FILE")
 OLD_CRT=$(grep -oP '(?<=old_crt: ")[^"]+' "$CONFIG_FILE")
 OLD_KEY=$(grep -oP '(?<=old_key: ")[^"]+' "$CONFIG_FILE")
 OLD_FULLCHAIN=$(grep -oP '(?<=old_fullchain: ")[^"]+' "$CONFIG_FILE")
@@ -28,7 +28,7 @@ OLD_FULLCHAIN=$(grep -oP '(?<=old_fullchain: ")[^"]+' "$CONFIG_FILE")
 DOMAINS=$(sed -n '/domains:/,/^[[:space:]]*$/p' "$CONFIG_FILE" | grep -v 'domains:' | sed 's/^[[:space:]]*//g' | sed 's/- //g' | sed 's/"//g' | tr '\n' ' ')
 
 # 检查是否读取到所有必要的信息
-if [ -z "$FNOS_CERT_NAME" ] || [ -z "$ACME_CERT_NAME" ] || [ -z "$CERT_PATH" ] || [ -z "$BACKUP_DIR" ] || [ -z "$EMAIL" ] || [ -z "$DOMAINS" ] || [ -z "$ALI_KEY" ] || [ -z "$ALI_SECRET" ]; then
+if [ -z "$FNOS_CERT_NAME" ] || [ -z "$ACME_CERT_NAME" ] || [ -z "$CERT_PATH" ] || [ -z "$BACKUP_DIR" ] || [ -z "$EMAIL" ] || [ -z "$DOMAINS" ] || [ -z "$CF_TOKEN" ] || [ -z "$CF_ACCOUNT_ID" ]; then
     echo "配置文件中缺少必需的信息！"
     exit 1
 fi
@@ -40,8 +40,8 @@ echo "证书路径: $CERT_PATH"
 echo "备份目录: $BACKUP_DIR"
 echo "邮箱: $EMAIL"
 echo "域名: $DOMAINS"
-echo "阿里云 API 密钥: $ALI_KEY"
-echo "阿里云 API 密钥 Secret: $ALI_SECRET"
+echo "CloudFlare Token: $CF_TOKEN"
+echo "CloudFlare Account ID: $CF_ACCOUNT_ID"
 echo "旧证书路径: $OLD_CRT"
 echo "旧密钥路径: $OLD_KEY"
 
@@ -53,13 +53,13 @@ acme_install_cert(){
     mkdir -p "$BACKUP_DIR"
 
     # 使用 curl 安装 acme.sh 并传递邮箱配置
-    echo "正在安装 acme.sh，使用邮箱 $EMAIL..."
-    curl https://get.acme.sh | sh -s email="$EMAIL"
+    # echo "正在安装 acme.sh，使用邮箱 $EMAIL..."
+    # curl https://get.acme.sh | sh -s email="$EMAIL"
 
-    # 配置阿里云 API 密钥
-    echo "正在配置阿里云密钥..."
-    export Ali_Key="$ALI_KEY"
-    export Ali_Secret="$ALI_SECRET"
+    # 配置 CloudFlare Token
+    echo "正在配置CloudFlare Token..."
+    export CF_Token="$CF_TOKEN"
+    export CF_Account_ID="$CF_ACCOUNT_ID"
 
     # 拼接多个域名作为 -d 参数
     DOMAIN_ARGS=""
@@ -69,8 +69,7 @@ acme_install_cert(){
 
     # 申请证书并为多个域名生成证书
     echo "申请证书：$DOMAINS"
-    ~/.acme.sh/acme.sh --issue --dns dns_ali $DOMAIN_ARGS --force
-
+    ~/.acme.sh/acme.sh --issue --dns dns_cf $DOMAIN_ARGS --force
 
     # 保存证书到指定目录
     echo "将证书保存到 $CERT_PATH"
