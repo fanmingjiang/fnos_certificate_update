@@ -1,8 +1,8 @@
 # 证书名称 / 域名 / 同时也是飞牛os上传的证书名
-fnos_cert_name: "peterfan.dpdns.org"  
+fnos_cert_name: "fan.dpdns.org"  
 
 # acme生成的证书名称
-acme_cert_name: "peterfan.dpdns.org"  
+acme_cert_name: "fan.dpdns.org"  
 
 # 新签发的证书文件保存路径
 cert_path: "/vol1/1000/Tools/Cert"
@@ -11,17 +11,17 @@ cert_path: "/vol1/1000/Tools/Cert"
 backup_dir: "/vol1/1000/Tools/Cert/backup"
 
 # 飞牛OS证书位置  上传证书之后使用此命令找：  cat /usr/trim/etc/network_cert_all.conf
-old_crt: "/usr/trim/var/trim_connect/ssls/peterfan.dpdns.org/1762152356/fan.dpdns.org.crt"
-old_key: "/usr/trim/var/trim_connect/ssls/peterfan.dpdns.org/1762152356/fan.dpdns.org.key"
-old_fullchain: "//usr/trim/var/trim_connect/ssls/peterfan.dpdns.org/1762152356/fullchain.crt"
+old_crt: "/usr/trim/var/trim_connect/ssls/fan.dpdns.org/1762152356/fan.dpdns.org.crt"
+old_key: "/usr/trim/var/trim_connect/ssls/fan.dpdns.org/1762152356/fan.dpdns.org.key"
+old_fullchain: "//usr/trim/var/trim_connect/ssls/fan.dpdns.org/1762152356/fullchain.crt"
 
 # 邮箱配置，用于生成证书
-email: "fanpet@gmail.com"
+email: "f*@gmail.com"
 
 # 域名列表，用于申请 SSL 证书
 domains:
-  - "peterfan.dpdns.org"
-  - "*.peterfan.dpdns.org"
+  - "fan.dpdns.org"
+  - "*.fan.dpdns.org"
 
 # 阿里云 API 密钥
 CF_Token: "ltGtz3qNYRiOmCH0pYu2iy4wiNG28fCbYPppij-o"
