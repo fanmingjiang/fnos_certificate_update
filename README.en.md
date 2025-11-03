@@ -5,7 +5,7 @@
 > **Please execute with root privileges**  
 > **Please resolve network issues on your own**
 
-This is a Bash script designed specifically for the Feiniu OS system, used to automatically update SSL/TLS certificates. The script utilizes the acme.sh tool for certificate renewal and uses Alibaba Cloud DNS for domain verification to ensure the certificate is updated before it expires. After updating, the script will back up the old certificate, replace it with the new one, and automatically restart related services to ensure the new certificate takes effect.
+This is a Bash script designed specifically for the Feiniu OS system, used to automatically update SSL/TLS certificates. The script utilizes the acme.sh tool for certificate renewal and uses Cloudflare DNS for domain verification to ensure the certificate is updated before it expires. After updating, the script will back up the old certificate, replace it with the new one, and automatically restart related services to ensure the new certificate takes effect.
 
 ## Features
 
@@ -19,12 +19,8 @@ This is a Bash script designed specifically for the Feiniu OS system, used to au
 
 - Feiniu OS system environment
 - Bash Shell
-- Alibaba Cloud API access with DNS management permissions
+- Cloudflare API access with DNS management permissions
 - Root privileges to perform service restarts and certificate file operations
-
-
-## Add a script to get a lucky certificate and automatically replace the FNOS certificate. Tutorial:
-https://club.fnnas.com/forum.php?mod=viewthread&tid=12158&page=1&extra=#pid59164
 
 ## Common Problem
 
